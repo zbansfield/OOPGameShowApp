@@ -9,7 +9,7 @@ class Game {
         this.phrases = [
             'Broken heart',
             'When pigs fly',
-            'Once in a blue moon', 
+            'Trade secrets', 
             'Frenemies',
             'Friendly fire',
             'Bermuda Triangle',
