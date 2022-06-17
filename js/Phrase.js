@@ -3,10 +3,15 @@
  * Phrase.js */
 
 class Phrase {
+
     constructor(phrase) {
         this.phrase = phrase.toLowerCase();
     }
 
+    /** addPhraseToDisplay() function
+     * adds the phrase to the display by appending list elements for each letter in the phrase to the ul element 
+     * for spaces in the phrase, the class name "space" is given to the list element
+     */
     addPhraseToDisplay() {
         const ul = document.querySelector('ul');
         const phraseSplit = this.phrase.split('');
@@ -23,6 +28,11 @@ class Phrase {
         })
      }
 
+    /** checkLetter() function
+     * checks if the letter selected is in the phrase
+     * @param {*} letterSelected 
+     * @returns boolean true or false
+     */
      checkLetter(letterSelected) {
         let isIn = false;
         const phraseSplit = this.phrase.split('')
@@ -34,6 +44,10 @@ class Phrase {
         return isIn
     }
 
+    /** showMatchedLetter() function
+     * removes the "hide" class name and adds the "show" class name to the list element of the matched letters 
+     * @param {*} matchedLetter 
+     */
     showMatchedLetter(matchedLetter) {
         const letterLi = document.querySelectorAll(`.letter.${matchedLetter}`);
         letterLi.forEach(li => {
