@@ -19,7 +19,7 @@ class Phrase {
             let li = document.createElement('li');
             if (letter.match(/[a-z]/i)) {
                 li.classList = `hide letter ${letter}`;
-                li.textContent = letter
+                li.textContent = letter;
             } else {
                 li.className = "space";
                 li.textContent = " ";
@@ -35,10 +35,10 @@ class Phrase {
      */
      checkLetter(letterSelected) {
         let isIn = false;
-        const phraseSplit = this.phrase.split('')
+        const phraseSplit = this.phrase.split('');
         phraseSplit.forEach(letter => {
             if (letter === letterSelected) {
-                isIn = true
+                isIn = true;
             }
         })
         return isIn

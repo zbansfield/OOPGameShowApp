@@ -11,7 +11,6 @@ class Game {
             'When pigs fly',
             'Trade secrets', 
             'Frenemies',
-            'Friendly fire',
             'Bermuda Triangle',
         ];
         this.activePhrase = 'null';
@@ -47,7 +46,7 @@ class Game {
         heartsImg[this.missed].src = 'images/lostHeart.png';
         this.missed++;
         if (this.missed === 5) {
-            this.gameOver("You lost :(")
+            this.gameOver("You lost :(", "lose");
         }
     }
 
@@ -80,16 +79,17 @@ class Game {
      * resets the gameboard for when a new game is started 
      * @param {*} message 
      */
-    gameOver(message) {
+    gameOver(message, result) {
 
         const startScreen = document.querySelector("#overlay");
         startScreen.style.display = '';
+        startScreen.className = result;
 
-        const h1 = document.querySelector('h1')
+        const h1 = document.querySelector('h1');
         h1.textContent = message;
 
         // Reseting all the DOM elements that were changed in the game
-        const ul = document.querySelector('ul')
+        const ul = document.querySelector('ul');
         ul.innerHTML = '';
 
         const heartsImg = document.querySelectorAll('img');
@@ -100,6 +100,7 @@ class Game {
     }
 
     /** handleInteraction() function
+     * disables the letter selected
      * calls checkLetter() method to see if the letter selected by the user matches a letter in the phrase
      * if checkLetter() returns true, the letter is added the class "chosen" and showMatchedLetter() method is called
      * checkForWin() is called and if it returns true, gameOver() is called with the win message as the argument
@@ -116,7 +117,7 @@ class Game {
             target.classList.add('chosen');
             this.activePhrase.showMatchedLetter(letterSelected);
             if (this.checkForWin(selectedLetters) === true) {
-                this.gameOver("Congratulations, you won! :D")
+                this.gameOver("Congratulations, you won! :D", "win");
             } 
         } else {
             target.classList.add('wrong');
