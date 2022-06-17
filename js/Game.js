@@ -30,44 +30,33 @@ class Game {
     }
 
     removeLife() {
-        const heartsImg = document.querySelector('img');
-        heartsImg.src = 'images/lostHeart.png';
+        const heartsImg = document.querySelectorAll('img');
+        heartsImg[this.missed].src = 'images/lostHeart.png';
         this.missed++;
         if (this.missed === 5) {
-            this.gameOver()
+            this.gameOver("You lost :(")
         }
     }
 
     checkForWin(selectedLetters) {
         let win = false;
         let checkLetter = true;
-        
-        // const phraseArr = this.activePhrase.phrase.split("");
-        // let withoutSpace = phraseArr.filter(phrase => phrase != " ")
-        
-        // withoutSpace.forEach(letter => {     
-        //     if (!selectedLetters.includes(letter)) {
-        //         checkLetter = false;
-        //     }
-        // })
-
-        // if (checkLetter) {
-        //     win = true
-        // }
 
         const letterLi = document.querySelectorAll('.letter');
         letterLi.forEach(letter => {
-            if (!letter.classList.includes("show")) {
+            if (!letter.classList.contains("show")) {
                 checkLetter = false;
             }
         })
-
+        
+        if (checkLetter === true) {
+            win = true;
+        }
 
         return win
     }
 
     handleInteraction(target) {
-        const letterButtons = document.querySelector('#qwerty');
         const selectedLetters = [];
 
         const letterSelected = target.textContent;
@@ -77,7 +66,7 @@ class Game {
             target.classList.add('chosen');
             this.activePhrase.showMatchedLetter(letterSelected);
             if (this.checkForWin(selectedLetters) === true) {
-                this.gameOver()
+                this.gameOver("Congratulations, you won! :D")
             } 
         } else {
             target.classList.add('wrong');
@@ -86,12 +75,23 @@ class Game {
 
         }
 
-    gameOver() {
+    gameOver(message) {
+
         const startScreen = document.querySelector("#overlay");
         startScreen.style.display = '';
+
         const h1 = document.querySelector('h1')
-        this.checkForWin ? h1.textContent = 'Yay! You won!' : h1.textContent = 'Better luck next time buddy';
-    // to do: in gameover screen reset all the inner HTML's
+        h1.textContent = message;
+
+        // Reseting all the DOM elements that were changed in the game
+        const ul = document.querySelector('ul')
+        ul.innerHTML = '';
+
+        const heartsImg = document.querySelectorAll('img');
+        heartsImg.forEach(img => {img.src = 'images/liveHeart.png'});
+        
+        const letterButtons = document.querySelectorAll('.key');
+        letterButtons.forEach(letter => {letter.className = 'key'});
     }
 
 }

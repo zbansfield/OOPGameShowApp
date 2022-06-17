@@ -42,8 +42,3 @@ class Phrase {
         })
     }
 }
-
-/**Quality Control checks -to delete before submitting-
- * checking if methods inside classes work properly 
- * checking that class creates objects properly
- */
