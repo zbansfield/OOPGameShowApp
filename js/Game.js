@@ -112,7 +112,7 @@ class Game {
 
         const letterSelected = target.textContent;
         selectedLetters.push(letterSelected);
-        target.disable = true;
+
         if (this.activePhrase.checkLetter(letterSelected) === true) {
             target.classList.add('chosen');
             this.activePhrase.showMatchedLetter(letterSelected);
@@ -121,8 +121,12 @@ class Game {
             } 
         } else {
             target.classList.add('wrong');
-            this.removeLife();
+            if (!target.disable) {
+                this.removeLife();
+            }
         }
+        
+        target.disable = true;
 
         }
 
