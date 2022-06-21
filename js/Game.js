@@ -53,10 +53,9 @@ class Game {
     /** checkForWin() function
      * checks if all the letters in the phrase have been selected by the user
      * does this by checking if the letter list elements contain the class "show" (added when the letter is selected)
-     * @param {*} selectedLetters 
      * @returns boolean true or false 
      */
-    checkForWin(selectedLetters) {
+    checkForWin() {
         let win = false;
         let checkLetter = true;
 
@@ -96,7 +95,10 @@ class Game {
         heartsImg.forEach(img => {img.src = 'images/liveHeart.png'});
         
         const letterButtons = document.querySelectorAll('.key');
-        letterButtons.forEach(letter => {letter.className = 'key'});
+        letterButtons.forEach(letter => {
+            letter.className = 'key';
+            letter.disable = false;
+        });
     }
 
     /** handleInteraction() function
@@ -108,21 +110,23 @@ class Game {
      * @param {*} target 
      */
     handleInteraction(target) {
-        const selectedLetters = [];
-
         const letterSelected = target.textContent;
-        selectedLetters.push(letterSelected);
 
-        if (this.activePhrase.checkLetter(letterSelected) === true) {
-            target.classList.add('chosen');
-            this.activePhrase.showMatchedLetter(letterSelected);
-            if (this.checkForWin(selectedLetters) === true) {
-                this.gameOver("Congratulations, you won! :D", "win");
-            } 
-        } else {
-            target.classList.add('wrong');
-            if (!target.disable) {
+        if (target.classList.length == 1) {
+            target.disable = false;
+        }
+
+        if (!target.disable) {
+            if (this.activePhrase.checkLetter(letterSelected) === true) {
+                target.classList.add('chosen');
+                this.activePhrase.showMatchedLetter(letterSelected);
+                if (this.checkForWin() === true) {
+                    this.gameOver("Congratulations, you won! :D", "win");
+                } 
+            } else {
+                target.classList.add('wrong');
                 this.removeLife();
+
             }
         }
         
